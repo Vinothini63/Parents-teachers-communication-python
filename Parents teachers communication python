@@ -1,0 +1,73 @@
+# Dictionary to store teacher messages
+teacher_messages = {}
+
+# Dictionary to store parent responses
+parent_responses = {}
+
+# Function to display a menu
+def display_menu():
+    print("1. Post a message (Teacher)")
+    print("2. View messages (Parent)")
+    print("3. Respond to a message (Parent)")
+    print("4. View responses (Teacher)")
+    print("5. Exit")
+
+# Function to post a message
+def post_message():
+    message_id = len(teacher_messages) + 1
+    message_content = input("Enter the message content: ")
+    teacher_messages[message_id] = message_content
+    print(f"Message posted successfully with ID {message_id}.")
+
+# Function to view messages
+def view_messages():
+    if not teacher_messages:
+        print("No messages posted yet.")
+    else:
+        for msg_id, content in teacher_messages.items():
+            print(f"ID: {msg_id}, Message: {content}")
+
+# Function to respond to a message
+def respond_to_message():
+    message_id = int(input("Enter the message ID you want to respond to: "))
+    if message_id in teacher_messages:
+        response = input("Enter your response: ")
+        if message_id in parent_responses:
+            parent_responses[message_id].append(response)
+        else:
+            parent_responses[message_id] = [response]
+        print("Response posted successfully.")
+    else:
+        print("Invalid message ID.")
+
+# Function to view responses
+def view_responses():
+    if not parent_responses:
+        print("No responses yet.")
+    else:
+        for msg_id, responses in parent_responses.items():
+            print(f"Responses to message ID {msg_id}:")
+            for response in responses:
+                print(f" - {response}")
+
+# Main function to run the portal
+def run_portal():
+    while True:
+        display_menu()
+        choice = input("Enter your choice: ")
+        if choice == '1':
+            post_message()
+        elif choice == '2':
+            view_messages()
+        elif choice == '3':
+            respond_to_message()
+        elif choice == '4':
+            view_responses()
+        elif choice == '5':
+            print("Exiting the portal. Goodbye!")
+            break
+        else:
+            print("Invalid choice. Please try again.")
+
+# Run the portal
+run_portal()
